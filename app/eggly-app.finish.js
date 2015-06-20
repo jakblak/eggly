@@ -23,13 +23,16 @@ angular.module('Eggly', [
 
       $scope.currentCategory = null;
 
+      function setCurrentCategory(category) {
+          $scope.currentCategory = category;
+
+          cancelCreating();
+          cancelEditing();
+      }
+
       // use this to wire up animations
       function isCurrentCategory(category) {
           return $scope.currentCategory !== null && category.name === $scope.currentCategory.name;
-      }
-
-      function setCurrentCategory(category) {
-          $scope.currentCategory = category;
       }
 
       $scope.isCurrentCategory = isCurrentCategory;
@@ -41,5 +44,26 @@ angular.module('Eggly', [
       $scope.isCreating = false;
       $scope.isEditing = false;
 
-  })
-;
+      function startCreating() {
+        $scope.isCreating = true;
+        $scope.isEditing = false;
+      }
+
+      function cancelCreating() {
+        $scope.isCreating = false;
+      }
+
+      function startEditing() {
+        $scope.isCreating = false;
+        $scope.isEditing = true;
+      }
+
+      function cancelEditing() {
+        $scope.isEditing = false;
+      }
+
+      $scope.startCreating = startCreating;
+      $scope.cancelCreating = cancelCreating;
+      $scope.startEditing = startEditing;
+      $scope.cancelEditing = cancelEditing;
+  });

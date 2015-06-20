@@ -4,3 +4,6 @@
 - .complete files are the finished app.  
 - my 'Original' branch will start from 'Simple States' adding bookmarks
 
+### Simple States branch:
+- Add, Edit, Delete Bookmarks
+
