@@ -63,9 +63,20 @@ angular.module('Eggly', [
       "category": "Humor"
     }];
 
+    $scope.isCurrentCategory = isCurrentCategory;
+    $scope.setCurrentCategory = setCurrentCategory;
+    $scope.shouldShowCreating = shouldShowCreating;
+    $scope.startCreating = startCreating;
+    $scope.cancelCreating = cancelCreating;
+    $scope.startEditing = startEditing;
+    $scope.cancelEditing = cancelEditing;
+    $scope.shouldShowEditing = shouldShowEditing;
+    $scope.createBookmark = createBookmark;
+
     $scope.currentCategory = null;
     $scope.isCreating = false;
     $scope.isEditing = false;
+    $scope.isCreating = false;
 
     function setCurrentCategory(category) {
       $scope.currentCategory = category;
@@ -78,9 +89,6 @@ angular.module('Eggly', [
     function isCurrentCategory(category) {
       return $scope.currentCategory !== null && category.name === $scope.currentCategory.name;
     }
-
-    $scope.isCurrentCategory = isCurrentCategory;
-    $scope.setCurrentCategory = setCurrentCategory;
 
     /****************************************************************
      * Creating and Editing Bookmark States
@@ -99,10 +107,6 @@ angular.module('Eggly', [
       $scope.isCreating = false;
     }
 
-    $scope.shouldShowCreating = shouldShowCreating;
-    $scope.startCreating = startCreating;
-    $scope.cancelCreating = cancelCreating;
-
     function shouldShowEditing() {
       return $scope.isEditing && !$scope.isCreating;
     }
@@ -116,9 +120,6 @@ angular.module('Eggly', [
       $scope.isEditing = false;
     }
 
-    $scope.startEditing = startEditing;
-    $scope.cancelEditing = cancelEditing;
-    $scope.shouldShowEditing = shouldShowEditing;
 
     /****************************************************************
     * CRUD
@@ -137,5 +138,27 @@ angular.module('Eggly', [
       resetCreateForm();
     }
 
-    $scope.createBookmark = createBookmark;
+    $scope.editedBookmark = null;
+
+    function setEditedBookmark(bookmark) {
+      $scope.editedBookmark = angular.copy(bookmark);
+    }
+
+    function updateBookmark(bookmark) {
+      var index = _.findIndex($scope.bookmarks, function(b) {
+        return b.id == bookmark.id;
+      });
+      $scope.bookmarks[index] = bookmark;
+      $scope.editedBookmark = null;
+      $scope.isEditing = false;
+    }
+
+    function isSelectedBookmark(bookmarkId) {
+      return $scope.editedBookmark !== null && $scope.editedBookmark.id === bookmarkId;
+    }
+
+    $scope.setEditedBookmark = setEditedBookmark;
+    $scope.updateBookmark = updateBookmark;
+    $scope.isSelectedBookmark = isSelectedBookmark;
+
   });
